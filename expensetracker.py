@@ -2,9 +2,10 @@ from expense import Expense
 
 def main ():
     print(f"Running the Expense Tracker!")
+    expense_file_pathway = "expenses.csv"
     expense = user_expense_amount()
-    saving_users_expense()
-    summarizing_users_expense()
+    saving_users_expense(expense, expense_file_pathway)
+    summarizing_users_expense(expense_file_pathway)
 
 def user_expense_amount():
     print("Obtaining the user's expense")
@@ -30,8 +31,10 @@ def user_expense_amount():
         else: 
             print("Invalid category number inputted. Please reenter a valid number")
             
-def saving_users_expense():
-    print("Saving the user's expense!")
+def saving_users_expense(expense, expenses_file_pathway):
+    print("Saving the user's expense!: {expense} to {expenses_file_pathway}") 
+    with open(expenses_file_pathway, "a") as f:
+        f.write(f"{expense.name},{expense.amount},{expense.category}\n")
 
 def summarizing_users_expense():
     print("Summarizing the users expense!")
