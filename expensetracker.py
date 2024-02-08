@@ -31,13 +31,22 @@ def user_expense_amount():
         else: 
             print("Invalid category number inputted. Please reenter a valid number")
             
-def saving_users_expense(expense, expenses_file_pathway):
-    print("Saving the user's expense!: {expense} to {expenses_file_pathway}") 
-    with open(expenses_file_pathway, "a") as f:
+def saving_users_expense(expense, expense_file_pathway):
+    print("Saving the user's expense!: {expense} to {expense_file_pathway}") 
+    with open(expense_file_pathway, "a") as f:
         f.write(f"{expense.name},{expense.amount},{expense.category}\n")
 
-def summarizing_users_expense():
+def summarizing_users_expense(expense_file_pathway):
     print("Summarizing the users expense!")
+    expenses = []
+    with open( expense_file_pathway , "r") as f:
+        lines = f.readlines()
+        for line in lines:
+            stripped_line = line.strip()
+            expense_name, expense_amount, expense_category = stripped_line.split(",")
+            line_expense = Expense(name=expense_name, amount=float(expense_amount), category=expense_category)
+            print(line_expense)
+            expenses.append(line_expense)
 
 if __name__ == "__main__":
     main()
