@@ -38,15 +38,23 @@ def saving_users_expense(expense, expense_file_pathway):
 
 def summarizing_users_expense(expense_file_pathway):
     print("Summarizing the users expense!")
-    expenses = []
+    expenses: list[Expense] = []
     with open( expense_file_pathway , "r") as f:
         lines = f.readlines()
         for line in lines:
             stripped_line = line.strip()
             expense_name, expense_amount, expense_category = stripped_line.split(",")
             line_expense = Expense(name=expense_name, amount=float(expense_amount), category=expense_category)
-            print(line_expense)
             expenses.append(line_expense)
+
+    category_amount = []
+    for expense in expenses:
+        key = expense.category
+        if key in category_amount:
+            category_amount[key] += expense.amount
+        else: 
+            category_amount[key] = expense.amount
+    print(category_amount)
 
 if __name__ == "__main__":
     main()
